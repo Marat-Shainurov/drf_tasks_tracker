@@ -8,6 +8,13 @@ class Employee(models.Model):
     surname = models.CharField(max_length=50, verbose_name='employee_surname')
     patronymic = models.CharField(max_length=50, verbose_name='employee_patronymic', **NULLABLE)
     position = models.CharField(max_length=100, verbose_name='employee_position')
-    employment_date = models.DateTimeField(verbose_name='employment_date')
-    dismissal_date = models.DateTimeField(verbose_name='dismissal_date', **NULLABLE)
-    is_active = models.BooleanField(verbose_name='is_employee_active')
+    employment_date = models.DateField(verbose_name='employment_date')
+    dismissal_date = models.DateField(verbose_name='dismissal_date', **NULLABLE)
+    is_active = models.BooleanField(verbose_name='is_employee_active', default=True)
+
+    def __str__(self):
+        return f'{self.surname} {self.name}'
+
+    class Meta:
+        verbose_name = 'Employee'
+        verbose_name_plural = 'Employees'
