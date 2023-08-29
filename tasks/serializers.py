@@ -7,3 +7,10 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = ('id', 'title', 'description', 'parent_task', 'executor', 'owner', 'status', 'deadline')
+
+
+class ExecutorTasksSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ('id', 'title', 'parent_task', 'status', 'deadline')
+

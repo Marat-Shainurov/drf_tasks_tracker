@@ -12,7 +12,7 @@ class Task(models.Model):
     parent_task = models.ForeignKey('self', verbose_name='parent_task', related_name='child_tasks',
                                     on_delete=models.CASCADE, **NULLABLE)
     executor = models.ForeignKey(Employee, verbose_name='task_executor', on_delete=models.RESTRICT,
-                                 related_name='task_executor')
+                                 related_name='executor_tasks')
     owner = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, verbose_name='task_owner', **NULLABLE,
                               related_name='task_owner')
     status = models.CharField(max_length=11, verbose_name='task_status', choices=STATUS_CHOICES, default='created')
