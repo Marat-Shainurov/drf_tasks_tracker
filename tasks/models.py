@@ -47,7 +47,7 @@ class Task(models.Model):
 
     def save(self, *args, **kwargs):
         self.clean_status()
-        super().save(args, **kwargs)
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Task'
