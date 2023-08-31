@@ -1,6 +1,8 @@
 from django.db import models
+from rest_framework.exceptions import ValidationError
 
 from employees.models import Employee
+from tasks.services import check_tasks_chain_status
 from users.models import CustomUser, NULLABLE
 
 
@@ -21,6 +23,19 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
+
+    def clean_status(self):
+        if not self.is_active:
+            msg = 'You cannot change the status value of an inactive task. Activate the task or create a new one'
+            raise ValidationError(msg)
+        elif self.status == 'done' and not check_tasks_chain_status(self):
+            raise ValidationError(f'Not all the child tasks of the {self} task are done yet!')
+        elif self.status == 'done':
+            self.is_active = False
+
+    def save(self, *args, **kwargs):
+        self.clean_status()
+        super().save(args, **kwargs)
 
     class Meta:
         verbose_name = 'Task'
