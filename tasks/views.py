@@ -1,7 +1,7 @@
 from rest_framework import generics
 
 from tasks.models import Task
-from tasks.serializers import TaskSerializer
+from tasks.serializers import TaskSerializer, ActiveHasParentExecutorSerializer
 
 
 class TaskCreateAPIView(generics.CreateAPIView):
@@ -23,11 +23,16 @@ class TaskActiveListAPIView(generics.ListAPIView):
     queryset = Task.objects.filter(is_active=True)
 
 
-class TaskNotDoneHasParentListAPIView(generics.ListAPIView):
+class TaskActiveHasParentList(generics.ListAPIView):
     serializer_class = TaskSerializer
 
     def get_queryset(self, *args, **kwargs):
         return Task.objects.filter(is_active=True, parent_task__isnull=False)
+
+
+class ActiveHasParentExecutorList(generics.ListAPIView):
+    serializer_class = ActiveHasParentExecutorSerializer
+    queryset = Task.objects.filter(is_active=True, parent_task__isnull=False, executor__isnull=True)
 
 
 class TaskRetrieveAPIView(generics.RetrieveAPIView):
