@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework import generics
 
 from tasks.models import Task
@@ -7,6 +6,11 @@ from tasks.serializers import TaskSerializer
 
 class TaskCreateAPIView(generics.CreateAPIView):
     serializer_class = TaskSerializer
+
+    def perform_create(self, serializer):
+        new_task = serializer.save()
+        new_task.owner = self.request.user
+        new_task.save()
 
 
 class TaskListAPIView(generics.ListAPIView):
@@ -17,6 +21,13 @@ class TaskListAPIView(generics.ListAPIView):
 class TaskActiveListAPIView(generics.ListAPIView):
     serializer_class = TaskSerializer
     queryset = Task.objects.filter(is_active=True)
+
+
+class TaskNotDoneHasParentListAPIView(generics.ListAPIView):
+    serializer_class = TaskSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        return Task.objects.filter(is_active=True, parent_task__isnull=False)
 
 
 class TaskRetrieveAPIView(generics.RetrieveAPIView):
