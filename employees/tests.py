@@ -1,5 +1,6 @@
 import datetime
 
+import pytz
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -71,7 +72,7 @@ class EmployeesBusynessTestCase(APITestCase):
         self.user_data = {'email': 'testing@mail.com', 'password': '123'}
         self.user = CustomUser.objects.create(**self.user_data)
         self.client.force_authenticate(user=self.user)
-        valid_deadline = datetime.datetime.now() + datetime.timedelta(hours=9)
+        valid_deadline = datetime.datetime.now(pytz.UTC) + datetime.timedelta(hours=9)
 
         e1_data = {'name': 'Test1', 'surname': 'Test1', 'position': 'TestP', 'is_active': True}
         e2_data = {'name': 'Test2', 'surname': 'Test2', 'position': 'TestP', 'is_active': True}
