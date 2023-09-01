@@ -14,9 +14,9 @@ urlpatterns = [
     path('tasks/update/<int:pk>/', TaskUpdateAPIView.as_view(), name='tasks_update'),
     path('tasks/delete/<int:pk>/', TaskDeleteAPIView.as_view(), name='tasks_delete'),
 
-    # active tasks ('created' or 'in_progress')
+    # active tasks
     path('tasks/active/', TaskActiveListAPIView.as_view(), name='active_tasks_list'),
-    # important active tasks with parents, on which other tasks depend.
+    # active 'important' tasks with parents, on which other tasks depend.
     path('tasks/active/with-parents/', TaskActiveHasParentList.as_view(),
          name='tasks_with_parents_list'),
     # adds the most suitable employee for each task in the list, in terms of current workload.
