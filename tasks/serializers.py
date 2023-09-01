@@ -6,11 +6,17 @@ from employees.services import get_most_available_executor
 from tasks.validators import IsDeadlineOk
 
 
-class TaskSerializer(serializers.ModelSerializer):
+class TaskCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = ('id', 'title', 'description', 'parent_task', 'executor', 'owner', 'status', 'deadline')
         validators = [IsDeadlineOk('deadline')]
+
+
+class TaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ('id', 'title', 'description', 'parent_task', 'executor', 'owner', 'status', 'deadline')
 
 
 class ExecutorTasksSerializer(serializers.ModelSerializer):

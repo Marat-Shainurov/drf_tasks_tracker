@@ -3,11 +3,11 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 from tasks.models import Task
 from tasks.pagination import TaskPagination
-from tasks.serializers import TaskSerializer, ActiveHasParentExecutorSerializer
+from tasks.serializers import TaskSerializer, ActiveHasParentExecutorSerializer, TaskCreateSerializer
 
 
 class TaskCreateAPIView(generics.CreateAPIView):
-    serializer_class = TaskSerializer
+    serializer_class = TaskCreateSerializer
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
