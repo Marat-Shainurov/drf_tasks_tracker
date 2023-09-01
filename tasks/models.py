@@ -1,5 +1,6 @@
 import datetime
 
+import pytz
 from django.db import models
 from rest_framework.exceptions import ValidationError
 
@@ -37,13 +38,13 @@ class Task(models.Model):
         elif self.status == 'done':
             if self.in_progres_from:
                 self.is_active = False
-                self.execution_date = datetime.datetime.now()
+                self.execution_date = datetime.datetime.now(pytz.UTC)
             else:
                 raise ValidationError("Only 'in_progress' tasks can be assigned with 'done'!")
         elif self.status == 'in_progress' and not self.executor:
             raise ValidationError(f"You can't assign the 'in_progress' status to a task without an executor!")
         elif self.status == 'in_progress':
-            self.in_progres_from = datetime.datetime.now()
+            self.in_progres_from = datetime.datetime.now(pytz.UTC)
 
     def save(self, *args, **kwargs):
         self.clean_status()
