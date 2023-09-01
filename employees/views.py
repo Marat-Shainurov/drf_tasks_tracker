@@ -3,6 +3,7 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 from employees.models import Employee
+from employees.pagination import EmployeePagination
 from employees.serializers import EmployeeSerializer, EmployeeBusynessSerializer
 
 
@@ -15,12 +16,14 @@ class EmployeeListAPIView(generics.ListAPIView):
     serializer_class = EmployeeSerializer
     queryset = Employee.objects.all()
     permission_classes = [IsAuthenticated]
+    pagination_class = EmployeePagination
 
 
 class EmployeeBusynessListAPIView(generics.ListAPIView):
     serializer_class = EmployeeBusynessSerializer
     queryset = Employee.objects.annotate(tasks_count=Count('executor_tasks')).order_by('-tasks_count')
     permission_classes = [IsAuthenticated]
+    pagination_class = EmployeePagination
 
 
 class EmployeeRetrieveAPIView(generics.RetrieveAPIView):
