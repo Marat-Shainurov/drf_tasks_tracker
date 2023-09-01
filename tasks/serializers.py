@@ -26,5 +26,6 @@ class ActiveHasParentExecutorSerializer(serializers.ModelSerializer):
         model = Task
         fields = ('id', 'title', 'deadline', 'parent_task', 'employee_for_task')
 
-    def get_employee_for_task(self, task):
+    @staticmethod
+    def get_employee_for_task(task):
         return [get_most_available_executor(task)]

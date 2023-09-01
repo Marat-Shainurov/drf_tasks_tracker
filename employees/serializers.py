@@ -3,7 +3,7 @@ from rest_framework.fields import SerializerMethodField
 
 from employees.models import Employee
 from tasks.models import Task
-from tasks.serializers import TaskSerializer, ExecutorTasksSerializer
+from tasks.serializers import ExecutorTasksSerializer
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
