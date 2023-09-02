@@ -5,7 +5,12 @@ from rest_framework.exceptions import ValidationError
 
 
 class IsDeadlineOk:
-
+    """
+    arg: field name.
+    returns: bool
+    Checks whether the set deadline value is valid or not.
+    The set deadline can't be earlier than 8 hours from the current time.
+    """
     def __init__(self, field):
         self.field = field
 

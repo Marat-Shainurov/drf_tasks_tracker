@@ -24,6 +24,10 @@ class TaskListAPIView(generics.ListAPIView):
 
 
 class TaskActiveListAPIView(generics.ListAPIView):
+    """
+    Returns a list of active Task objects.
+    Active tasks have 'created' and 'in_progress' as their status value.
+    """
     serializer_class = TaskSerializer
     queryset = Task.objects.filter(is_active=True)
     permission_classes = [IsAuthenticated]
@@ -31,6 +35,9 @@ class TaskActiveListAPIView(generics.ListAPIView):
 
 
 class TaskActiveHasParentList(generics.ListAPIView):
+    """
+    Returns a list of active Task objects, that have their parent tasks.
+    """
     serializer_class = TaskSerializer
     permission_classes = [IsAuthenticated]
     pagination_class = TaskPagination
@@ -40,6 +47,12 @@ class TaskActiveHasParentList(generics.ListAPIView):
 
 
 class ActiveHasParentExecutorList(generics.ListAPIView):
+    """
+    Returns a list of active Task objects, that have their parent tasks,
+    and the 'employee_for_task' field, which offers the most suitable employee for the task.
+    'employee_for_task' is chosen between the less loaded employee and the parent task executor.
+    ./employees/services/get_most_available_executor function is used to pick the executor.
+    """
     serializer_class = ActiveHasParentExecutorSerializer
     queryset = Task.objects.filter(is_active=True, parent_task__isnull=False, executor__isnull=True)
     permission_classes = [IsAuthenticated]

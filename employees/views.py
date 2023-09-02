@@ -20,6 +20,10 @@ class EmployeeListAPIView(generics.ListAPIView):
 
 
 class EmployeeBusynessListAPIView(generics.ListAPIView):
+    """
+    Returns a list of employees ordered by the number of assigned tasks (descending ordering),
+    with 'executor_tasks' field, which contains a list of assigned tasks for each employee.
+    """
     serializer_class = EmployeeBusynessSerializer
     queryset = Employee.objects.annotate(tasks_count=Count('executor_tasks')).order_by('-tasks_count')
     permission_classes = [IsAuthenticated]

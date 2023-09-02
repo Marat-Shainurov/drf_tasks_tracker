@@ -2,6 +2,11 @@ from rest_framework.exceptions import ValidationError
 
 
 def check_tasks_chain_status(task):
+    """
+    arg: task: Task
+    returns: bool
+    Recursive service functions that checks whether each child task of the passed argument has the 'done' status.
+    """
     try:
         child_tasks = task.child_tasks.all()
     except ValueError:
