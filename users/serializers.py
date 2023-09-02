@@ -7,7 +7,7 @@ from users.models import CustomUser
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('id', 'email', 'phone', 'password')
+        fields = ('id', 'email', 'phone', 'password', 'is_active')
 
     def validate_password(self, value: str) -> str:
         return make_password(value)
