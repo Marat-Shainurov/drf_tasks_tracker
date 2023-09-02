@@ -86,7 +86,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'tasks_tracker',
         'USER': 'postgres',
-        'PASSWORD': os.getenv('DATABASES_PASSWORD')
+        'PASSWORD': os.getenv('DATABASES_PASSWORD'),
+        'HOST': 'db',
+        'PORT': '5432'
     }
 }
 
