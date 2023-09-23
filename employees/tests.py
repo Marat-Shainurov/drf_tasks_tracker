@@ -91,7 +91,7 @@ class EmployeesBusynessTestCase(APITestCase):
         t3 = Task.objects.create(**t3_data)
         t4_data = {'title': 'Task4', 'description': 'T', 'deadline': valid_deadline,
                    'is_active': True, 'parent_task': t3, 'executor': e1}
-        t4 = Task.objects.create(**t4_data)
+        Task.objects.create(**t4_data)
 
     def test_employees_busyness(self):
         response = self.client.get('http://localhost:8000/employees/busyness/')

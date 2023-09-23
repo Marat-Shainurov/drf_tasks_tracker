@@ -34,7 +34,7 @@ class Task(models.Model):
             msg = "You cannot change the 'status' field value of a inactive task."
             raise ValidationError(msg)
         elif self.status == 'done' and not check_tasks_chain_status(self):
-            raise ValidationError(f"Not all the child tasks of the '{self}' task are done yet!")
+            raise ValidationError(f"Not all the child tasks of the '{self.title}' task are done yet!")
         elif self.status == 'done':
             if self.in_progres_from:
                 self.is_active = False
@@ -42,7 +42,7 @@ class Task(models.Model):
             else:
                 raise ValidationError("Only 'in_progress' tasks can be assigned with 'done'!")
         elif self.status == 'in_progress' and not self.executor:
-            raise ValidationError(f"You can't assign the 'in_progress' status to a task without an executor!")
+            raise ValidationError("You can't assign the 'in_progress' status to a task without an executor!")
         elif self.status == 'in_progress':
             self.in_progres_from = datetime.datetime.now(pytz.UTC)
 

@@ -19,21 +19,21 @@ class CustomUserTestCase(APITestCase):
 
     def test_create_user(self):
         user_data = {'email': 'test_two@mail.com', 'password': 'qweasd123qwe', 'phone': '123123123'}
-        response = self.client.post(f'http://localhost:8000/users/', data=user_data)
+        response = self.client.post('http://localhost:8000/users/', data=user_data)
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
         self.assertEquals(response.json()['email'], user_data['email'])
         self.assertEquals(response.json()['phone'], '123123123')
 
     def test_create_user_wrong_email(self):
         user_data = {'email': 'wrong.com', 'password': 'qweasd123qwe'}
-        response = self.client.post(f'http://localhost:8000/users/', data=user_data)
+        response = self.client.post('http://localhost:8000/users/', data=user_data)
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEquals(response.json()['email'], ['Enter a valid email address.'])
 
     def test_list_users(self):
         user_data = {'email': 'test_two@mail.com', 'password': 'qweasd123qwe'}
-        self.client.post(f'http://localhost:8000/users/', data=user_data)
-        response_get = self.client.get(f'http://localhost:8000/users/')
+        self.client.post('http://localhost:8000/users/', data=user_data)
+        response_get = self.client.get('http://localhost:8000/users/')
         self.assertEquals(response_get.status_code, status.HTTP_200_OK)
         self.assertEquals(CustomUser.objects.all().count(), 2)
         self.assertEquals(response_get.json()['results'][0]['email'], self.test_user.email)

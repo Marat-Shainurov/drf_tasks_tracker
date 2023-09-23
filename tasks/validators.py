@@ -20,4 +20,4 @@ class IsDeadlineOk:
         delta = now - deadline
         deadline_limit = timedelta(hours=8)
         if delta > deadline_limit:
-            raise ValidationError(f"The 'deadline' value can't be earlier than 8 hours from the current time")
+            raise ValidationError("The 'deadline' value can't be earlier than 8 hours from the current time")
