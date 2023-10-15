@@ -1,53 +1,39 @@
-# Описание проекта tasks_tracker
-tasks_tracker это django-rest-framework проект.
-Данное серверное приложение создано для работы с базой данных по отслеживанию, управлению задачами сотрудников.
+# General description
+tasks_tracker is a django-rest-framework project.
+The project is created for work with a database for effective monitoring management of employees tasks.
 
+# Install and usage
+1. Clone the project from https://github.com/Marat-Shainurov/drf_tasks_tracker to your local machine.
 
-# Запуск проекта
-1. Установить docker, выбрав соответствующую ОС:
-   https://docs.docker.com/get-docker/
+2. Build a new image and run the project container from the root project directory:
+    - docker-compose build
+    - docker-compose up
 
-2. Клонировать в IDE проект https://github.com/Marat-Shainurov/tasks_tracker.git на вашу локальную машину.
+3. Read the project's documentation (swagger or redoc format):
+    - http://127.0.0.1:8000/swagger/
+    - http://127.0.0.1:8000/redoc/
 
-3. Запустить процесс создания и запуска образа приложения, с помощью команд:
-   - docker-compose build
-   - docker-compose up
+4. Go to the main page on your browser http://127.0.0.1:8000/ and start working with the app's endpoints.
 
-4. Изучить документацию проекта (swagger или redoc):
-   - http://127.0.0.1:8000/swagger/
-   - http://127.0.0.1:8000/redoc/
+# Apps and models
+1. tasks - tasks app.
+    - Task - tasks model.
+2. employees - employees app.
+    - Employee - employee model.
+3. users - users app.
+    - CustomUser - customized User model.
+    - UersManager class is overridden and customized as well (./users/manager.py).
 
-5. Открыть в браузере главную страницу проекта http://127.0.0.1:8000/ , и начать работу с эндпоинтами.
+# Fixture
+You can load the fixture with several testing objects if necessary:
+- docker-compose exec app python manage.py loaddata project_test_data.json
+- Credentials:\
+  {
+  "email": "m_shainurov@mail.ru",
+  "password": "123"
+  }
 
-
-# Приложения и модели
-1. tasks - приложение для работы с задачами.
-   - Task - модель-задачи.
-2. employees - приложение для работы с сотрудниками.
-   - Employee - модель-сотрудники.
-3. users.
-   - CustomUser - кастомная модель пользователей.
-   - Переопределен и кастомизирован также и UersManager класс (./users/manager.py)
-
-# Пагинация
-Для всех моделей реализована пагинация с выводом 10 объектов на страницу.
-Максимальное значение - 100 объектов на страницу.
-
-# Тестирование
-Все эндпоинты проекта покрыты тестами.
-Тесты описаны в модулях <app_name>/test.py.
-
-# Эндпоинты и документация
-Настроена документация yasg-drf.
-Все эндпоинты можно изучить по ссылкам:
-- http://localhost:8000/redoc/
-- http://localhost:8000/swagger/
-
-# Безопасность
-Для проекта настроен CORS.
-
-# Тестовые данные
-При необходимости можно загрузить тестовые данные, с помощью фикстуры:
-  - docker-compose exec app python manage.py loaddata project_test_data.json
-  - После загрузки фикстур в admin интерфейс можно авторизоваться под: 
-    login - m_shainurov@mail.ru,  password - 123
+# Testing
+- All the endpoints are covered by pytest tests in <app_name>/test.py \
+- Run tests:\
+  docker-compose exec app python manage.py test
