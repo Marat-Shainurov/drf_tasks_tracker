@@ -1,6 +1,7 @@
 # General description
 tasks_tracker is a django-rest-framework project.
 The project is created for work with a database for effective monitoring management of employees tasks.
+Main stack: Djangorestframework, Postgresql.
 
 # Install and usage
 1. Clone the project from https://github.com/Marat-Shainurov/drf_tasks_tracker to your local machine.
